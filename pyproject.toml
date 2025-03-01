@@ -1,0 +1,10 @@
+[project]
+name = "gen-audio"
+version = "0.1.0"
+description = "Generate audio file from given files."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "beautifulsoup4>=4.13.3",
+    "ebooklib>=0.18",
+]
