@@ -3,11 +3,16 @@ import os
 import re
 
 from chapterizer import Chapterizer
+from defaults import *
 from tts import gen_audio
 
 
 def split_and_gen_audio(
-    epub_path, output_dir, voice="af_heart", speed=1, sample_rate=22050
+    epub_path,
+    output_dir,
+    voice=DEFAULT_VOICE,
+    speed=DEFAULT_SPEED,
+    sample_rate=DEFAULT_SAMPLE_RATE,
 ):
     chapterizer = Chapterizer(epub_path, output_dir)
     generated_text_files = chapterizer.chapterize()
@@ -17,7 +22,7 @@ def split_and_gen_audio(
         with open(os.path.join(output_dir, text_file), "r") as f:
             text = f.read()
         audio_file = re.sub(r"\.txt$", ".mp3", text_file)
-        gen_audio(text, audio_file, voice, speed, sample_rate)
+        gen_audio(text, os.path.join(output_dir, audio_file), voice, speed, sample_rate)
 
 
 def parse_args():
@@ -27,11 +32,14 @@ def parse_args():
         "output_dir", type=str, help="Directory to save the output audio files"
     )
     parser.add_argument(
-        "--voice", type=str, default="af_heart", help="Voice to use for TTS"
+        "--voice", type=str, default=DEFAULT_VOICE, help="Voice to use for TTS"
     )
     parser.add_argument("--speed", type=float, default=1.0, help="Speed of the TTS")
     parser.add_argument(
-        "--sample_rate", type=int, default=22050, help="Sample rate of the audio"
+        "--sample_rate",
+        type=int,
+        default=DEFAULT_SAMPLE_RATE,
+        help="Sample rate of the audio",
     )
     return parser.parse_args()
 

@@ -12,7 +12,7 @@
             "console": "integratedTerminal",
             "args": [
                 "c:/Users/ibic/Downloads/Fundamental-Accessibility-Tests-Basic-Functionality-v2.0.0.epub",
-                "C:/Users/ibic/AppData/Local/Temp/gen-audio-output"
+                "C:/Users/ibic/Downloads/gen-audio-output"
             ]
         }
     ]
