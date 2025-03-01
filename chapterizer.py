@@ -1,7 +1,7 @@
 import os
 
 from bs4 import BeautifulSoup
-from ebooklib import epub, ITEM_COVER, ITEM_IMAGE
+from ebooklib import ITEM_COVER, ITEM_IMAGE, epub
 
 
 class Chapterizer(object):
@@ -10,6 +10,9 @@ class Chapterizer(object):
         self.output_dir = output_dir
         self.book = epub.read_epub(epub_path)
         self.chapter_index = 0
+        if not os.path.exists(output_dir):
+            print(f"Creating output directory: {output_dir}")
+            os.makedirs(output_dir)
 
     def save_cover(self, item):
         cover_ext = ".jpg"
@@ -73,19 +76,22 @@ class Chapterizer(object):
             file_name = file_name[:240] + ".txt"
             with open(os.path.join(self.output_dir, file_name), "w") as f:
                 f.write(soup.get_text())
+            return file_name
 
         def extract_chapters(items):
+            generated_files = []
             for c in items:
                 if isinstance(c, epub.Link):
-                    extract_link(c)
+                    generated_files.append(extract_link(c))
                 elif isinstance(c, tuple):
                     for sc in c:
                         if isinstance(sc, epub.Section):
-                            extract_link(sc)
+                            generated_files.append(extract_link(sc))
+            return generated_files
 
         self.chapter_index = 0
         self.extract_cover()
-        extract_chapters(self.book.toc)
+        return extract_chapters(self.book.toc)
 
 
 if __name__ == "__main__":

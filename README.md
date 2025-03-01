@@ -10,19 +10,9 @@ graph TD;
 
 ## Usage
 
-### Chapterize
+This project uses `uv` for dependency management and running the program, to run it after cloning the source to your local directory, run `uv sync` to create the virtual environment in the `.env` directory and download all the dependencies. The run the following commands to perform the conversion:
 
-To convert an EPUB file into text files per chapter and extract the cover image:
+`uv run -v main.py <epub path> <audio output directory>`
 
-```python
-from chapterize import Chapterizer
-
-epub_path = 'path/to/your/book.epub'
-output_dir = 'path/to/output/directory'
-
-chapterizer = Chapterizer(epub_path, output_dir)
-chapterizer.extract_cover()  # Extract just the cover image
-chapterizer.chapterize()     # Extract chapters and cover image
-```
-
-The cover image will be saved as 'cover.jpg' in the output directory.
+You can use the following epub for testing:
+https://github.com/daisy/epub-accessibility-tests/releases/download/fundamental-2.0/Fundamental-Accessibility-Tests-Basic-Functionality-v2.0.0.epub
