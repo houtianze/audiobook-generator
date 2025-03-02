@@ -19,7 +19,7 @@ def split_and_gen_audio(
 
     for text_file in generated_text_files:
         text = ""
-        with open(os.path.join(output_dir, text_file), "r") as f:
+        with open(os.path.join(output_dir, text_file), "r", encoding="utf-8") as f:
             text = f.read()
         audio_file = re.sub(r"\.txt$", ".mp3", text_file)
         gen_audio(text, os.path.join(output_dir, audio_file), voice, speed, sample_rate)
@@ -32,22 +32,16 @@ def parse_args():
         "output_dir", type=str, help="Directory to save the output audio files"
     )
     parser.add_argument(
-        "--voice", type=str, default=DEFAULT_VOICE, help="Voice to use for TTS"
+        "--voice", type=str, default=DEFAULT_VOICE, help=f"Voice to use for TTS (default: {DEFAULT_VOICE})"
     )
-    parser.add_argument("--speed", type=float, default=1.0, help="Speed of the TTS")
-    parser.add_argument(
-        "--sample_rate",
-        type=int,
-        default=DEFAULT_SAMPLE_RATE,
-        help="Sample rate of the audio",
-    )
+    parser.add_argument("--speed", type=float, default=DEFAULT_SPEED, help=f"Speed of the TTS (default: {DEFAULT_SPEED})")
     return parser.parse_args()
 
 
 def main():
     args = parse_args()
     split_and_gen_audio(
-        args.epub_path, args.output_dir, args.voice, args.speed, args.sample_rate
+        args.epub_path, args.output_dir, args.voice, args.speed
     )
 
 

@@ -11,7 +11,7 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "args": [
-                "c:/Users/ibic/Downloads/Fundamental-Accessibility-Tests-Basic-Functionality-v2.0.0.epub",
+                "C:/Users/ibic/Calibre Library/Adolf Hitler/Mein Kampf - Adolf Hitler (209)/Mein Kampf - Adolf Hitler - Adolf Hitler.epub",
                 "C:/Users/ibic/Downloads/gen-audio-output"
             ]
         }

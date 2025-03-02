@@ -74,8 +74,10 @@ class Chapterizer(object):
             file_name = ''.join(c if c not in invalid_chars else '_' for c in chapter_name)
             # Limit length to avoid issues on systems with filename length restrictions
             file_name = file_name[:240] + ".txt"
-            with open(os.path.join(self.output_dir, file_name), "w") as f:
-                f.write(soup.get_text())
+            file_name = os.path.join(self.output_dir, file_name)
+            with open(file_name, "w", encoding="utf-8") as f:
+                text = soup.get_text()
+                f.write(text)
             return file_name
 
         def extract_chapters(items):
