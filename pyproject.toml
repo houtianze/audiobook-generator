@@ -1,7 +1,7 @@
 [project]
-name = "gen-audio"
+name = "audio-book-generator"
 version = "0.1.0"
-description = "Generate audio file from given files."
+description = "Generate audio books (mp3 files per chapter) ebooks (curently only supports the epub format)."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -10,6 +10,7 @@ dependencies = [
     "kokoro>=0.8.2",
     "misaki[zh]>=0.8.2",
     "pip>=25.0.1",
+    "rich>=13.9.4",
     "soundfile>=0.13.1",
     "torch>=2.6.0",
 ]

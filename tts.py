@@ -12,7 +12,6 @@ def gen_audio(
     audio_file,
     voice=DEFAULT_VOICE,
     speed=DEFAULT_SPEED,
-    sample_rate=DEFAULT_SAMPLE_RATE,
 ):
     # 'a' => American English, ' => British English
     # 'j' => Japanese: pip install misaki[ja]
@@ -29,7 +28,7 @@ def gen_audio(
     for _, _, audio in generator:
         audios.append(audio)
     audios = np.concatenate(audios)
-    sf.write(audio_file, audios, sample_rate, bitrate_mode="VARIABLE")
+    sf.write(audio_file, audios, DEFAULT_SAMPLE_RATE, bitrate_mode="VARIABLE")
 
 
 def main():
@@ -49,10 +48,11 @@ def main():
         help=f"Speech speed (default: {DEFAULT_SPEED})",
     )
     parser.add_argument(
-        "--sample-rate",
-        type=int,
-        default=DEFAULT_SAMPLE_RATE,
-        help=f"Audio sample rate (default: {DEFAULT_SAMPLE_RATE})",
+        "--f",
+        "--format",
+        type=str,
+        default=DEFAULT_FORMAT,
+        help=f"Audio format (default: {DEFAULT_FORMAT})",
     )
 
     args = parser.parse_args()
@@ -62,7 +62,7 @@ def main():
         args.audio_file,
         voice=args.voice,
         speed=args.speed,
-        sample_rate=args.sample_rate,
+        format=args.format,
     )
     print(f"Audio saved to {args.audio_file}")
 
