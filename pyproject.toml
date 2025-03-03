@@ -3,7 +3,7 @@ name = "audiobook-generator"
 version = "1.0.1"
 description = "Generate audiobooks (mp3 files per chapter) from ebooks (currently only supports the epub format)."
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
     "beautifulsoup4>=4.13.3",
     "ebooklib>=0.18",
@@ -16,11 +16,15 @@ dependencies = [
 ]
 
 [project.scripts]
-abg = "audiobook_generator:main"
+abg = "audiobook_generator.main:main"
 
 [project.urls]
 Homepage = "https://github.com/houtianze/audiobook-generator"
 Repository = "https://github.com/houtianze/audiobook-generator"
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
 
 [tool.uv.sources]
 torch = [
