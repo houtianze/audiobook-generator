@@ -1,7 +1,7 @@
 [project]
-name = "audio-book-generator"
+name = "audiobook-generator"
 version = "0.1.0"
-description = "Generate audio books (mp3 files per chapter) ebooks (curently only supports the epub format)."
+description = "Generate audiobooks (mp3 files per chapter) from ebooks (currently only supports the epub format)."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [

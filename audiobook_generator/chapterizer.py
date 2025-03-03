@@ -97,6 +97,7 @@ class Chapterizer(object):
 
 
 if __name__ == "__main__":
+    from .defaults import *
     import argparse
 
     parser = argparse.ArgumentParser(

@@ -4,7 +4,7 @@ import numpy as np
 import soundfile as sf
 from kokoro import KPipeline
 
-from defaults import *
+from .defaults import *
 
 
 def gen_audio(
@@ -12,6 +12,7 @@ def gen_audio(
     audio_file,
     voice=DEFAULT_VOICE,
     speed=DEFAULT_SPEED,
+    format=DEFAULT_FORMAT,
 ):
     # 'a' => American English, ' => British English
     # 'j' => Japanese: pip install misaki[ja]
@@ -28,7 +29,7 @@ def gen_audio(
     for _, _, audio in generator:
         audios.append(audio)
     audios = np.concatenate(audios)
-    sf.write(audio_file, audios, DEFAULT_SAMPLE_RATE, bitrate_mode="VARIABLE")
+    sf.write(audio_file, audios, DEFAULT_SAMPLE_RATE, format=format)
 
 
 def main():

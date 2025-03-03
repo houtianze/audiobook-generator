@@ -4,9 +4,9 @@ import re
 
 from rich import print
 
-from chapterizer import Chapterizer
-from defaults import *
-from tts import gen_audio
+from .chapterizer import Chapterizer
+from .defaults import *
+from .tts import gen_audio
 
 
 def split_and_gen_audio(
@@ -43,21 +43,21 @@ def parse_args():
         "--voice",
         type=str,
         default=DEFAULT_VOICE,
-        help=f"Voice to use for TTS (default: {DEFAULT_VOICE})",
+        help=f"Voice to use for TTS. (default: {DEFAULT_VOICE})",
     )
     parser.add_argument(
         "-s",
         "--speed",
         type=float,
         default=DEFAULT_SPEED,
-        help=f"Speed of the TTS (default: {DEFAULT_SPEED})",
+        help=f"Speed of the TTS. (default: {DEFAULT_SPEED})",
     )
     parser.add_argument(
         "-f",
         "--format",
         type=str,
         default=DEFAULT_FORMAT,
-        help=f"Format (file extension) of the generated audio files (default: {DEFAULT_FORMAT})",
+        help=f"Format (file extension) of the generated audio files. (default: {DEFAULT_FORMAT})",
     )
     parser.add_argument(
         "-r",
@@ -65,10 +65,11 @@ def parse_args():
         type=bool,
         default=True,
         help=(
-            "Whether to resume from the last chapter (audio file) generated after some previous run has been interrupted. "
-            "If False, any existing audio files generated previously will be discarded and the generation starts from the beginning. "
-            "This only applies to audio files (mp3), where text files are always overwritten "
-            f"as it's quite fast to generate compared to to audio generation (default: {DEFAULT_RESUME})."
+            "Whether to skip audio generation if the audio file already exists in the output directory "
+            "(mainly when some previous run was interrupted). "
+            "If False, any existing audio files generated previously will be overwritten. "
+            "This applies only to audio files (mp3), where text files are always overwritten "
+            f"as they are quite fast to generate. (default: {DEFAULT_RESUME})"
         ),
     )
     return parser.parse_args()
