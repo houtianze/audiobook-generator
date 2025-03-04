@@ -5,14 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python Debugger: Current File with Arguments",
+            "name": "Python Debugger: Module abg",
             "type": "debugpy",
             "request": "launch",
-            "program": "${file}",
-            "console": "integratedTerminal",
+            "module": "audiobook_generator.main",
             "args": [
-                "C:/Users/ibic/Calibre Library/Adolf Hitler/Mein Kampf - Adolf Hitler (209)/Mein Kampf - Adolf Hitler - Adolf Hitler.epub",
-                "C:/Users/ibic/Downloads/gen-audio-output"
+                "c:/Users/ibic/Downlos/test.epub",
+                "C:/Users/ibic/Downloads"
             ]
         }
     ]
