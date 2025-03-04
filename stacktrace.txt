@@ -1,0 +1,54 @@
+Traceback (most recent call last):
+  File "./audiobook-generator/.venv/bin/abg", line 10, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "./audiobook-generator/audiobook_generator/main.py", line 80, in main
+    split_and_gen_audio(
+  File "./audiobook-generator/audiobook_generator/main.py", line 32, in split_and_gen_audio
+    gen_audio(text, audio_file, voice, speed)
+  File "./audiobook-generator/audiobook_generator/tts.py", line 33, in gen_audio
+    for _, _, audio in generator:
+                       ^^^^^^^^^
+  File "./audiobook-generator/.venv/lib/python3.12/site-packages/kokoro/pipeline.py", line 383, in __call__
+    output = KPipeline.infer(model, ps, pack, speed) if model else None
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "./audiobook-generator/.venv/lib/python3.12/site-packages/kokoro/pipeline.py", line 232, in infer
+    return model(ps, pack[len(ps)-1], speed, return_output=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "./audiobook-generator/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "./audiobook-generator/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "./audiobook-generator/.venv/lib/python3.12/site-packages/kokoro/model.py", line 133, in forward
+    audio, pred_dur = self.forward_with_tokens(input_ids, ref_s, speed)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "./audiobook-generator/.venv/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "./audiobook-generator/.venv/lib/python3.12/site-packages/kokoro/model.py", line 118, in forward_with_tokens
+    audio = self.decoder(asr, F0_pred, N_pred, ref_s[:, :128]).squeeze()
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "./audiobook-generator/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "./audiobook-generator/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "./audiobook-generator/.venv/lib/python3.12/site-packages/kokoro/istftnet.py", line 422, in forward
+    x = self.generator(x, s, F0_curve)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "./audiobook-generator/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "./audiobook-generator/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "./audiobook-generator/.venv/lib/python3.12/site-packages/kokoro/istftnet.py", line 306, in forward
+    har_spec, har_phase = self.stft.transform(har_source)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "./audiobook-generator/.venv/lib/python3.12/site-packages/kokoro/istftnet.py", line 96, in transform
+    return torch.abs(forward_transform), torch.angle(forward_transform)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+NotImplementedError: The operator 'aten::angle' is not currently implemented for the MPS device. If you want this op to be considered for addition please comment on https://github.com/pytorch/pytorch/issues/141287 and mention use-case, that resulted in missing op as well as commit hash 2236df1770800ffea5697b11b0bb0d910b2e59e1. As a temporary fix, you can set the environment variable `PYTORCH_ENABLE_MPS_FALLBACK=1` to use the CPU as a fallback for this op. WARNING: this will be slower than running natively on MPS.

@@ -1,8 +1,11 @@
 import argparse
+from os import environ
 
 import numpy as np
 import soundfile as sf
+import torch
 from kokoro import KPipeline
+from rich import print
 
 from .defaults import *
 
@@ -18,8 +21,24 @@ def gen_audio(
     # 'j' => Japanese: pip install misaki[ja]
     # 'z' => Mandarin Chinese: pip install misaki[zh]
     lang_code = voice[0]
+    device = None
+    if torch.backends.mps.is_available() and torch.backends.mps.is_built():
+        # To use MPS device, we need to set the environment variable PYTORCH_ENABLE_MPS_FALLBACK to 1,
+        # Otherwise, you will see the following error:
+        # NotImplementedError: The operator 'aten::angle' is not currently implemented for the MPS device.
+        if "PYTORCH_ENABLE_MPS_FALLBACK" in environ and environ["PYTORCH_ENABLE_MPS_FALLBACK"]:
+            print("[italic]Using MPS device with fallback[/italic]")
+            device = "mps"
+        else:
+            print(
+                "[bold purple]"
+                "environment variable 'PYTORCH_ENABLE_MPS_FALLBACK' is not defined and set to 1, "
+                "please set it to 1 to use MPS device, otherwise CPU will be used instead, "
+                "which is slower (but it still works nevertheles)."
+                "[/bold purple]"
+            )
     pipeline = KPipeline(
-        lang_code=lang_code, repo_id="hexgrad/Kokoro-82M"
+        lang_code=lang_code, repo_id="hexgrad/Kokoro-82M", device=device
     )  # <= make sure lang_code matches voice
     # pipeline = KPipeline(
     #     lang_code=lang_code, repo_id="hexgrad/Kokoro-82M-v1.1-zh"
