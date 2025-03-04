@@ -1,22 +1,34 @@
 import os
 
+from rich import print
 from bs4 import BeautifulSoup
 from ebooklib import ITEM_COVER, ITEM_IMAGE, epub
 
 
 class Chapterizer(object):
-    def __init__(self, epub_path, output_dir):
+    def __init__(self, epub_path, output_dir, bare_output):
         self.epub_path = epub_path
         self.output_dir = output_dir
+        self.bear_output = bare_output
+
         self.book = epub.read_epub(epub_path)
+        if not bare_output:
+            title = self.book.title
+            author = "Unknown"
+            try:
+                author = self.book.get_metadata("DC", "creator")[0][0]
+            except:
+                print(
+                    f"[red]Failed to extract author name, using '{author}' instead.[/red]"
+                )
+            self.output_dir = os.path.join(output_dir, f"{title} - {author}")
+        os.makedirs(self.output_dir, exist_ok=True)
+
         self.chapter_index = 0
-        if not os.path.exists(output_dir):
-            print(f"Creating output directory: {output_dir}")
-            os.makedirs(output_dir)
 
     def save_cover(self, item):
         cover_ext = ".jpg"
-        if '.' in item.file_name:
+        if "." in item.file_name:
             cover_ext = item.file_name.split(".")[-1]
         cover_path = os.path.join(self.output_dir, f"cover.{cover_ext}")
         with open(cover_path, "wb") as f:
@@ -59,7 +71,7 @@ class Chapterizer(object):
     def chapterize(self):
 
         # Then extract chapters (keeping existing functionality)
-        def extract_link(chapter):
+        def _extract(chapter):
             item = self.book.get_item_with_href(chapter.href.split("#")[0])
             if not item:
                 print(f"Error: Could not find item with href {chapter.href}")
@@ -67,11 +79,14 @@ class Chapterizer(object):
 
             soup = BeautifulSoup(item.content, "html.parser")
             self.chapter_index += 1
-            chapter_name = f"{self.chapter_index:03d} - {chapter.title}"
+            chapter_type = "Chapter" if isinstance(chapter, epub.Link) else "Section"
+            chapter_name = f"{self.chapter_index:03d} - {chapter_type} - {chapter.title}"
             # Sanitize filename to work on all operating systems
             # Remove characters not allowed in filenames and replace with underscores
             invalid_chars = r'<>:"/\|?*'
-            file_name = ''.join(c if c not in invalid_chars else '_' for c in chapter_name)
+            file_name = "".join(
+                c if c not in invalid_chars else "_" for c in chapter_name
+            )
             # Limit length to avoid issues on systems with filename length restrictions
             file_name = file_name[:240] + ".txt"
             file_name = os.path.join(self.output_dir, file_name)
@@ -81,19 +96,20 @@ class Chapterizer(object):
             return file_name
 
         def extract_chapters(items):
-            generated_files = []
-            for c in items:
-                if isinstance(c, epub.Link):
-                    generated_files.append(extract_link(c))
-                elif isinstance(c, tuple):
-                    for sc in c:
-                        if isinstance(sc, epub.Section):
-                            generated_files.append(extract_link(sc))
-            return generated_files
+            extracted_files = []
+            # DFS to flatten the nested chapters
+            if isinstance(items, (tuple, list)):
+                for item in items:
+                    extracted_files.extend(extract_chapters(item))
+            else:
+                extracted_files.append(_extract(items))
+            return extracted_files
 
         self.chapter_index = 0
         self.extract_cover()
-        return extract_chapters(self.book.toc)
+        extracted_files = extract_chapters(self.book.toc)
+        self.chapter_index = 0
+        return self.output_dir, extracted_files
 
 
 if __name__ == "__main__":

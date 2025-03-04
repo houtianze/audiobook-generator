@@ -16,9 +16,10 @@ def split_and_gen_audio(
     speed=DEFAULT_SPEED,
     format=DEFAULT_FORMAT,
     resume=DEFAULT_RESUME,
+    bare_output=DEFAULT_BARE_OUTPUT,
 ):
-    chapterizer = Chapterizer(epub_path, output_dir)
-    generated_text_files = chapterizer.chapterize()
+    chapterizer = Chapterizer(epub_path, output_dir, bare_output)
+    output_dir, generated_text_files = chapterizer.chapterize()
 
     for text_file in generated_text_files:
         text = ""
@@ -72,6 +73,17 @@ def parse_args():
             f"as they are quite fast to generate. (default: {DEFAULT_RESUME})"
         ),
     )
+    parser.add_argument(
+        "-b",
+        "--bare-output",
+        type=bool,
+        default=DEFAULT_BARE_OUTPUT,
+        help=(
+            "Whether to directly create files in the output directory specified. "
+            "If false, a sub directory of the format 'Title - Author' will be created inside the output directory, "
+            f"where all the file are created. (default: {DEFAULT_RESUME})"
+        ),
+    )
     return parser.parse_args()
 
 
@@ -84,6 +96,7 @@ def main():
         speed=args.speed,
         format=args.format,
         resume=args.resume,
+        bare_output=args.bare_output,
     )
     print(
         (
