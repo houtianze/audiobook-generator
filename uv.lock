@@ -2,14 +2,10 @@ version = 1
 revision = 1
 requires-python = ">=3.10"
 resolution-markers = [
-    "python_full_version >= '3.12' and sys_platform == 'linux'",
     "python_full_version >= '3.12' and sys_platform == 'win32'",
-    "python_full_version < '3.12' and sys_platform == 'linux'",
     "python_full_version < '3.12' and sys_platform == 'win32'",
-    "python_full_version >= '3.12' and sys_platform == 'windows'",
-    "python_full_version >= '3.12' and sys_platform != 'linux' and sys_platform != 'win32' and sys_platform != 'windows'",
-    "python_full_version < '3.12' and sys_platform == 'windows'",
-    "python_full_version < '3.12' and sys_platform != 'linux' and sys_platform != 'win32' and sys_platform != 'windows'",
+    "python_full_version >= '3.12' and sys_platform != 'win32'",
+    "python_full_version < '3.12' and sys_platform != 'win32'",
 ]
 
 [[package]]
@@ -263,14 +259,14 @@ wheels = [
 
 [[package]]
 name = "cloudpathlib"
-version = "0.20.0"
+version = "0.21.0"
 source = { registry = "https://pypi.org/simple/" }
 dependencies = [
     { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/71/0b/a47d78ed2816db100543b504fdbfc2070f422aac858e6bcf775713e37b8a/cloudpathlib-0.20.0.tar.gz", hash = "sha256:f6ef7ca409a510f7ba4639ba50ab3fc5b6dee82d6dff0d7f5715fd0c9ab35891", size = 45149 }
+sdist = { url = "https://files.pythonhosted.org/packages/5f/54/71e828c2e415024783f92ee942d3223f6f94cf3fe2e48689b0f3bbb5b608/cloudpathlib-0.21.0.tar.gz", hash = "sha256:fb8f6b890a3d37b35f0eabff86721bb8d35dfc6a6be98c1f4d34b19e989c6641", size = 45271 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/1f/6e/b64600156934dab14cc8b403095a9ea8bd722aad2e775673c68346b76220/cloudpathlib-0.20.0-py3-none-any.whl", hash = "sha256:7af3bcefbf73392ae7f31c08b3660ec31607f8c01b7f6262d4d73469a845f641", size = 52547 },
+    { url = "https://files.pythonhosted.org/packages/e8/0f/b1a9b09a84ef98b9fc38d50c6b2815cb2256b804a78e7d838ddfbdc035c7/cloudpathlib-0.21.0-py3-none-any.whl", hash = "sha256:657e95ecd2663f1123b6daa95d49aca4b4bc8a9fa90c07930bdba2c5e295e5ef", size = 52744 },
 ]
 
 [[package]]
@@ -552,7 +548,7 @@ wheels = [
 
 [[package]]
 name = "kokoro"
-version = "0.8.2"
+version = "0.8.4"
 source = { registry = "https://pypi.org/simple/" }
 dependencies = [
     { name = "huggingface-hub" },
@@ -564,9 +560,9 @@ dependencies = [
     { name = "torch", version = "2.6.0+cu124", source = { registry = "https://download.pytorch.org/whl/cu124" }, marker = "sys_platform == 'win32'" },
     { name = "transformers" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a5/4f/d0e0ca2921e8b1924058e0a8e2e28eb6757396b677b65aa58be0d1f6cf2c/kokoro-0.8.2.tar.gz", hash = "sha256:563380786262e7b6518b02ee2bafb3cd57e3fbe0d4e21143eed6f1139fb4c3c5", size = 26215783 }
+sdist = { url = "https://files.pythonhosted.org/packages/8a/8d/b92493629ea4b88147bcd06b86bbfce636ce86d11a094d7dfa9623ccf43f/kokoro-0.8.4.tar.gz", hash = "sha256:a65dee47a37e5da50af8c2d3cc3b09c67516f7a31d9c821c417cde0d265acd33", size = 26217637 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/07/29/cb16c0419bdf485fd04e0abdb22a500f143c90f5878d3107cfca4afd4d71/kokoro-0.8.2-py3-none-any.whl", hash = "sha256:4d98db413e103f4ff85626c912fa6ec82c092e73e5595b7be786cdb97fd5d564", size = 32338 },
+    { url = "https://files.pythonhosted.org/packages/7b/ae/fcc6673421f4486b25c9b10b7bde1d707090091efede48c849c6ba7c5c46/kokoro-0.8.4-py3-none-any.whl", hash = "sha256:de4149635c49b24952142fc38f71cff42bad5657ea9cdd6d787723f0cdd35d35", size = 32336 },
 ]
 
 [[package]]
@@ -833,14 +829,14 @@ wheels = [
 
 [[package]]
 name = "misaki"
-version = "0.8.2"
+version = "0.8.4"
 source = { registry = "https://pypi.org/simple/" }
 dependencies = [
     { name = "regex" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/34/05/2d21ba628683126e1ce205c5bd61f69ec9d7d21ed82d2a79c3a0bf698df5/misaki-0.8.2.tar.gz", hash = "sha256:249a8ddd3f588b00d58b7633e3da179174b1fffe6bcbf0e51367afcaaaddb1a4", size = 3690442 }
+sdist = { url = "https://files.pythonhosted.org/packages/38/35/2e681f15ad20a7440a0772f8351f95beb7b6c15fdc4f6ac60b734f8f62fe/misaki-0.8.4.tar.gz", hash = "sha256:207361518e921c0d4855c595824edbc8e400d593cbd7f5f86d3b74fb70fb91a7", size = 3690597 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/02/f4/38f3f21415f94648acdbd1ab616872defe5ccb599a4b380506c8c75310fd/misaki-0.8.2-py3-none-any.whl", hash = "sha256:e1af3c9f815cb844d6ae282d8eddfbb5ea949eba965d7da6995b69d88f4b3c46", size = 3548432 },
+    { url = "https://files.pythonhosted.org/packages/e3/c4/06a9c53f96c9d00925cdc4bfc78b2c638802496ee17ecd60e60b8bc39d60/misaki-0.8.4-py3-none-any.whl", hash = "sha256:4baaf45a44ecb13c9d1f56bd7f99d2fb1cf2b0f3b1df0246a103e4e51966c286", size = 3548580 },
 ]
 
 [package.optional-dependencies]
@@ -994,7 +990,7 @@ name = "nvidia-cudnn-cu12"
 version = "9.1.0.70"
 source = { registry = "https://pypi.org/simple/" }
 dependencies = [
-    { name = "nvidia-cublas-cu12", marker = "sys_platform == 'linux'" },
+    { name = "nvidia-cublas-cu12", marker = "sys_platform != 'win32'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/9f/fd/713452cd72343f682b1c7b9321e23829f00b842ceaedcda96e742ea0b0b3/nvidia_cudnn_cu12-9.1.0.70-py3-none-manylinux2014_x86_64.whl", hash = "sha256:165764f44ef8c61fcdfdfdbe769d687e06374059fbb388b6c89ecb0e28793a6f", size = 664752741 },
@@ -1005,7 +1001,7 @@ name = "nvidia-cufft-cu12"
 version = "11.2.1.3"
 source = { registry = "https://pypi.org/simple/" }
 dependencies = [
-    { name = "nvidia-nvjitlink-cu12", marker = "sys_platform == 'linux'" },
+    { name = "nvidia-nvjitlink-cu12", marker = "sys_platform != 'win32'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/27/94/3266821f65b92b3138631e9c8e7fe1fb513804ac934485a8d05776e1dd43/nvidia_cufft_cu12-11.2.1.3-py3-none-manylinux2014_x86_64.whl", hash = "sha256:f083fc24912aa410be21fa16d157fed2055dab1cc4b6934a0e03cba69eb242b9", size = 211459117 },
@@ -1024,9 +1020,9 @@ name = "nvidia-cusolver-cu12"
 version = "11.6.1.9"
 source = { registry = "https://pypi.org/simple/" }
 dependencies = [
-    { name = "nvidia-cublas-cu12", marker = "sys_platform == 'linux'" },
-    { name = "nvidia-cusparse-cu12", marker = "sys_platform == 'linux'" },
-    { name = "nvidia-nvjitlink-cu12", marker = "sys_platform == 'linux'" },
+    { name = "nvidia-cublas-cu12", marker = "sys_platform != 'win32'" },
+    { name = "nvidia-cusparse-cu12", marker = "sys_platform != 'win32'" },
+    { name = "nvidia-nvjitlink-cu12", marker = "sys_platform != 'win32'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/3a/e1/5b9089a4b2a4790dfdea8b3a006052cfecff58139d5a4e34cb1a51df8d6f/nvidia_cusolver_cu12-11.6.1.9-py3-none-manylinux2014_x86_64.whl", hash = "sha256:19e33fa442bcfd085b3086c4ebf7e8debc07cfe01e11513cc6d332fd918ac260", size = 127936057 },
@@ -1037,7 +1033,7 @@ name = "nvidia-cusparse-cu12"
 version = "12.3.1.170"
 source = { registry = "https://pypi.org/simple/" }
 dependencies = [
-    { name = "nvidia-nvjitlink-cu12", marker = "sys_platform == 'linux'" },
+    { name = "nvidia-nvjitlink-cu12", marker = "sys_platform != 'win32'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/db/f7/97a9ea26ed4bbbfc2d470994b8b4f338ef663be97b8f677519ac195e113d/nvidia_cusparse_cu12-12.3.1.170-py3-none-manylinux2014_x86_64.whl", hash = "sha256:ea4f11a2904e2a8dc4b1833cc1b5181cde564edd0d5cd33e3c168eff2d1863f1", size = 207454763 },
@@ -1918,12 +1914,8 @@ name = "torch"
 version = "2.6.0"
 source = { registry = "https://pypi.org/simple/" }
 resolution-markers = [
-    "python_full_version >= '3.12' and sys_platform == 'linux'",
-    "python_full_version < '3.12' and sys_platform == 'linux'",
-    "python_full_version >= '3.12' and sys_platform == 'windows'",
-    "python_full_version >= '3.12' and sys_platform != 'linux' and sys_platform != 'win32' and sys_platform != 'windows'",
-    "python_full_version < '3.12' and sys_platform == 'windows'",
-    "python_full_version < '3.12' and sys_platform != 'linux' and sys_platform != 'win32' and sys_platform != 'windows'",
+    "python_full_version >= '3.12' and sys_platform != 'win32'",
+    "python_full_version < '3.12' and sys_platform != 'win32'",
 ]
 dependencies = [
     { name = "filelock", marker = "sys_platform != 'win32'" },
