@@ -33,7 +33,7 @@ The selection to run the model on CPU or GPU is automatic, meaning:
 - On Windows/WSL/Linux, If you have Nvidia graphic card with the driver properly installed, the model will be loaded to GPU (cuda) and executed, otherwise, the CPU is used (which is slower compared to GPU)
 - On Mac, you need to set the environment variable `PYTORCH_ENABLE_MPS_FALLBACK=1` for it to run on GPU (because at the time of writing, the MPS support in PyTorchis is not complete and it won't work without the CPU fallback), otherwise it will run on CPU.
 
-[!TIP]
+> [!TIP]
 
-You can use the following epub for testing:
-https://github.com/daisy/epub-accessibility-tests/releases/download/fundamental-2.0/Fundamental-Accessibility-Tests-Basic-Functionality-v2.0.0.epub
+> You can use the following epub for testing:
+> https://github.com/daisy/epub-accessibility-tests/releases/download/fundamental-2.0/Fundamental-Accessibility-Tests-Basic-Functionality-v2.0.0.epub
