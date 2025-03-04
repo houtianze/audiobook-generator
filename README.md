@@ -11,7 +11,9 @@ graph TD;
 ## Usage
 
 ### Prerequisites
-- Python 3.10+
+- Python 3.10+ (This program was tested on 3.12)
+- (Optional) Install [espeak-ng](https://github.com/espeak-ng/espeak-ng) (On Debian/Ubuntu, run `apt install -y espeak-ng`)
+- (Development only) [uv](https://github.com/astral-sh/uv)
 
 ### For End Users
 - You DON'T need to clone this repository, but simply install it via `pip` (virtual environment highly recommended)
