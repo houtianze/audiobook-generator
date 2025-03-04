@@ -31,11 +31,11 @@ def gen_audio(
             device = "mps"
         else:
             print(
-                "[bold purple]"
+                "[purple]"
                 "environment variable 'PYTORCH_ENABLE_MPS_FALLBACK' is not defined and set to 1, "
                 "please set it to 1 to use MPS device, otherwise CPU will be used instead, "
-                "which is slower (but it still works nevertheles)."
-                "[/bold purple]"
+                "which is slower (but it still works nevertheless)."
+                "[purple]"
             )
     pipeline = KPipeline(
         lang_code=lang_code, repo_id="hexgrad/Kokoro-82M", device=device
