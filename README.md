@@ -10,6 +10,9 @@ graph TD;
 
 ## Usage
 
+### Prerequisites
+- Python 3.10+
+
 ### For End Users
 - You DON'T need to clone this repository, but simply install it via `pip` (virtual environment highly recommended)
   - `pip install audiobook-generator`
@@ -28,7 +31,7 @@ graph TD;
 ### CPU or GPU?
 The selection to run the model on CPU or GPU is automatic, meaning:
 - On Windows/WSL/Linux, If you have Nvidia graphic card with the driver properly installed, the model will be loaded to GPU (cuda) and executed, otherwise, the CPU is used (which is slower compared to GPU)
-- On Mac, it's all automatic (should be running in GPU)
+- On Mac, you need to set the environment variable `PYTORCH_ENABLE_MPS_FALLBACK=1` for it to run on GPU (because at the time of writing, the MPS support in PyTorchis is not complete and it won't work without the CPU fallback), otherwise it will run on CPU.
 
 - Tip:
 You can use the following epub for testing:

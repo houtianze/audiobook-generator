@@ -27,7 +27,7 @@ def gen_audio(
         # Otherwise, you will see the following error:
         # NotImplementedError: The operator 'aten::angle' is not currently implemented for the MPS device.
         if "PYTORCH_ENABLE_MPS_FALLBACK" in environ and environ["PYTORCH_ENABLE_MPS_FALLBACK"]:
-            print("[italic]Using MPS device with fallback[/italic]")
+            print("[italic]Using MPS device with fallback.[/italic]")
             device = "mps"
         else:
             print(
