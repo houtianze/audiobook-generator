@@ -25,8 +25,8 @@ graph TD;
 ### For Development
 - This program uses [`uv`](https://github.com/astral-sh/uv) for dependency management and execution in development, install it first if you haven't done so.
 - To run the program from its source:
-  - Cloning this repository and cd inside.
-  - Run `uv sync` to create the virtual environment in the `.env` directory and download all the dependencies. You only need to run it ONCE in the beginning.
+  - Clone this repository and `cd` inside.
+  - (Do it ONCE only at the first time) Run `uv sync` to create the virtual environment in the `.env` directory and download all the dependencies.
   - Then run the following command
     - `uv run -m audiobook_generator.main ...`
 
