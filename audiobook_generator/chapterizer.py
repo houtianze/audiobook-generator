@@ -1,8 +1,10 @@
 import os
 
-from rich import print
 from bs4 import BeautifulSoup
 from ebooklib import ITEM_COVER, ITEM_IMAGE, epub
+from rich import print
+
+from .util import make_fs_safe
 
 
 class Chapterizer(object):
@@ -21,7 +23,9 @@ class Chapterizer(object):
                 print(
                     f"[red]Failed to extract author name, using '{author}' instead.[/red]"
                 )
-            self.output_dir = os.path.join(output_dir, f"{title} - {author}")
+            book_directory = f"{title} - {author}"
+            book_directory = make_fs_safe(book_directory)
+            self.output_dir = os.path.join(output_dir, book_directory)
         os.makedirs(self.output_dir, exist_ok=True)
 
         self.chapter_index = 0
@@ -80,13 +84,10 @@ class Chapterizer(object):
             soup = BeautifulSoup(item.content, "html.parser")
             self.chapter_index += 1
             chapter_type = "Chapter" if isinstance(chapter, epub.Link) else "Section"
-            chapter_name = f"{self.chapter_index:03d} - {chapter_type} - {chapter.title}"
-            # Sanitize filename to work on all operating systems
-            # Remove characters not allowed in filenames and replace with underscores
-            invalid_chars = r'<>:"/\|?*'
-            file_name = "".join(
-                c if c not in invalid_chars else "_" for c in chapter_name
+            chapter_name = (
+                f"{self.chapter_index:03d} - {chapter_type} - {chapter.title}"
             )
+            file_name = make_fs_safe(chapter_name)
             # Limit length to avoid issues on systems with filename length restrictions
             file_name = file_name[:240] + ".txt"
             file_name = os.path.join(self.output_dir, file_name)
@@ -113,8 +114,9 @@ class Chapterizer(object):
 
 
 if __name__ == "__main__":
-    from .defaults import *
     import argparse
+
+    from .defaults import *
 
     parser = argparse.ArgumentParser(
         description="Convert EPUB to text files per chapter and extract cover image."
