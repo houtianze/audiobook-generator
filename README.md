@@ -16,7 +16,7 @@ graph TD;
 - (Development only) [uv](https://github.com/astral-sh/uv)
 
 ### For End Users
-- You DON'T need to clone this repository, but simply install it via `pip` (virtual environment highly recommended)
+- You DON'T need to clone this repository, but simply install it via `pip` (Virtual environment highly recommended, if you use `pipx` instead, virtual environments are automatically created for you.)
   - `pip install audiobook-generator`
 - Convert your epub file to audiobooks via the command
   - `abg <epub path> <audio output directory>`
