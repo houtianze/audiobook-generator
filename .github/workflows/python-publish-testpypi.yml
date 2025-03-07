@@ -51,7 +51,7 @@ jobs:
     environment:
       name: testpypi
       #   url: https://test.pypi.org/p/audiobook-generator
-      url: https://test.pypi.org/p/audiobook-generator/{{ env.VERSION }}
+      url: https://test.pypi.org/p/audiobook-generator/${{ env.VERSION }}
 
     steps:
       - name: Retrieve release distributions
