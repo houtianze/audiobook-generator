@@ -15,6 +15,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Set VERSION variable from tag
+        run: |
+          # TAG=${{ github.event.release.name }}
+          TAG=${{ github.event.release.tag_name }}
+          echo "VERSION=${TAG#v}" >> $GITHUB_ENV
+
       - uses: actions/checkout@v4
 
       - name: Install uv
@@ -44,7 +50,8 @@ jobs:
 
     environment:
       name: testpypi
-      url: https://test.pypi.org/p/audiobook-generator
+      #   url: https://test.pypi.org/p/audiobook-generator
+      url: https://test.pypi.org/p/audiobook-generator/{{ env.VERSION }}
 
     steps:
       - name: Retrieve release distributions
