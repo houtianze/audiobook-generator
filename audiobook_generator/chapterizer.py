@@ -110,7 +110,7 @@ class Chapterizer(object):
         self.extract_cover()
         extracted_files = extract_chapters(self.book.toc)
         self.chapter_index = 0
-        return self.output_dir, extracted_files
+        return extracted_files
 
 
 if __name__ == "__main__":

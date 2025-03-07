@@ -19,14 +19,13 @@ def split_and_gen_audio(
     bare_output=DEFAULT_BARE_OUTPUT,
 ):
     chapterizer = Chapterizer(epub_path, output_dir, bare_output)
-    output_dir, generated_text_files = chapterizer.chapterize()
+    generated_text_files = chapterizer.chapterize()
 
     for text_file in generated_text_files:
         text = ""
-        with open(os.path.join(output_dir, text_file), "r", encoding="utf-8") as f:
+        with open(text_file, "r", encoding="utf-8") as f:
             text = f.read()
         audio_file = re.sub(r"\.txt$", f".{format}", text_file)
-        audio_file = os.path.join(output_dir, audio_file)
         if resume and os.path.exists(audio_file):
             print(f"Skipping {audio_file} as it already exists")
             continue
