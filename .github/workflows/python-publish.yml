@@ -18,13 +18,13 @@ permissions:
 jobs:
   release-build:
     runs-on: ubuntu-latest
-    environment: release
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Install uv
         uses: astral-sh/setup-uv@v5
+
       - uses: actions/setup-python@v5
         with:
           python-version-file: "pyproject.toml"
@@ -36,7 +36,6 @@ jobs:
 
       - name: Publish using uv
         run: |
-          # Co
           uv publish
 
   pypi-publish:
@@ -52,11 +51,11 @@ jobs:
     environment:
       name: pypi
       # OPTIONAL: uncomment and update to include your PyPI project URL in the deployment status:
-      # url: https://pypi.org/p/YOURPROJECT
+      # url: https://pypi.org/p/audiobook-generator
       #
       # ALTERNATIVE: if your GitHub Release name is the PyPI project version string
       # ALTERNATIVE: exactly, uncomment the following line instead:
-      # url: https://pypi.org/project/YOURPROJECT/${{ github.event.release.name }}
+      url: https://pypi.org/project/audiobook-generator/${{ github.event.release.name }}
 
     steps:
       - name: Retrieve release distributions
