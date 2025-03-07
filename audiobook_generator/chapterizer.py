@@ -83,6 +83,7 @@ class Chapterizer(object):
             if link in all_links:
                 return None
 
+            all_links.append(link)
             soup = BeautifulSoup(link.content, "html.parser")
             self.chapter_index += 1
             chapter_type = "Chapter" if isinstance(chapter, epub.Link) else "Section"
