@@ -76,12 +76,14 @@ class Chapterizer(object):
 
         # Then extract chapters (keeping existing functionality)
         def _extract(chapter):
-            item = self.book.get_item_with_href(chapter.href.split("#")[0])
-            if not item:
+            link = self.book.get_item_with_href(chapter.href.split("#")[0])
+            if not link:
                 print(f"Error: Could not find item with href {chapter.href}")
                 exit(1)
+            if link in all_links:
+                return None
 
-            soup = BeautifulSoup(item.content, "html.parser")
+            soup = BeautifulSoup(link.content, "html.parser")
             self.chapter_index += 1
             chapter_type = "Chapter" if isinstance(chapter, epub.Link) else "Section"
             chapter_name = (
@@ -103,9 +105,12 @@ class Chapterizer(object):
                 for item in items:
                     extracted_files.extend(extract_chapters(item))
             else:
-                extracted_files.append(_extract(items))
+                file = _extract(items)
+                if file:
+                    extracted_files.append(file)
             return extracted_files
 
+        all_links = []
         self.chapter_index = 0
         self.extract_cover()
         extracted_files = extract_chapters(self.book.toc)
