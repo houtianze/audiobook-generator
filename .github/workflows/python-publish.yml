@@ -53,11 +53,11 @@ jobs:
     environment:
       name: pypi
       # OPTIONAL: uncomment and update to include your PyPI project URL in the deployment status:
-      # url: https://pypi.org/p/audiobook-generator
+      url: https://pypi.org/p/audiobook-generator
       #
       # ALTERNATIVE: if your GitHub Release name is the PyPI project version string
       # ALTERNATIVE: exactly, uncomment the following line instead:
-      url: https://pypi.org/project/audiobook-generator/${{ github.event.release.name }}
+      # url: https://pypi.org/project/audiobook-generator/${{ github.event.release.name }}
 
     steps:
       - name: Retrieve release distributions
