@@ -33,6 +33,7 @@ jobs:
       - name: Build release distributions
         run: |
           # NOTE: put your own distribution build steps here.
+          rm -Rf dist/
           uv build
 
       - name: Upload distributions
