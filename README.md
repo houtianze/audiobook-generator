@@ -16,11 +16,12 @@ graph TD;
 - (Development only) [uv](https://github.com/astral-sh/uv)
 
 ### For End Users
-- You DON'T need to clone this repository, but simply install it via `pip` (Virtual environment highly recommended, if you use `pipx` instead, virtual environments are automatically created for you.)
-  - `pip install audiobook-generator`
+- You don't need to clone this repository and you can install either way:
+  - Using `pip`: `python -m pip install audiobook-generator` (virtual environment highly recommended)
+  - Using `pipx`: `pipx install audiobook-generator`
   - **NOTE** For Windows users, there is one extra step needed to make cuda(Nvidia) GPU is used when available:
     - If using `pip` and virtual environment, run this after the above `pip install` command (*with the virtual environment activated first*)
-      - `pip3 install torch --index-url https://download.pytorch.org/whl/cu124`
+      - `pip install torch --index-url https://download.pytorch.org/whl/cu124 --force`
     - If using `pipx`, run this command instead:
       - `pipx inject audiobook-generator torch --index-url https://download.pytorch.org/whl/cu124 --force`
     - Technical details on why this is needed is described at [the "Why you need that extra pip install step for Windows?" section](#why-you-need-that-extra-pip-install-step-for-windows).

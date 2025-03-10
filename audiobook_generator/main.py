@@ -102,7 +102,7 @@ def check_system():
             "PyTorch installed does not support CUDA, to be able to use CUDA, "
             "please run the following command once and rerun this program:\n"
             "- (If using pip) "
-            "pip3 install torch --index-url https://download.pytorch.org/whl/cu124 --force\n"
+            "pip install torch --index-url https://download.pytorch.org/whl/cu124 --force\n"
             "- (If using pipx) "
             "pipx runpip audiobook-generator install torch --index-url https://download.pytorch.org/whl/cu124 --force\n"
             "For more information, please refer to: "
