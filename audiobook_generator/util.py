@@ -1,7 +1,6 @@
+import importlib
 import subprocess
 from os import environ
-
-import torch
 
 
 # https://stackoverflow.com/a/67504607/404271
@@ -14,6 +13,8 @@ def is_nvidia_available():
 
 
 def is_mps_supported():
+    torch = importlib.import_module("torch")
+
     return torch.backends.mps.is_available() and torch.backends.mps.is_built()
 
 

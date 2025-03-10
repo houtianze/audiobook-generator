@@ -1,8 +1,8 @@
 import argparse
+import importlib
 
 import numpy as np
 import soundfile as sf
-from kokoro import KPipeline
 from rich import print
 
 from audiobook_generator.util import is_mps_fallback_enabled, is_mps_supported
@@ -25,7 +25,8 @@ def gen_audio(
     if is_mps_supported() and is_mps_fallback_enabled():
         print("[italic]Using MPS device with fallback.[/italic]")
         device = "mps"
-    pipeline = KPipeline(
+    kokoro = importlib.import_module("kokoro")
+    pipeline = kokoro.KPipeline(
         lang_code=lang_code, repo_id="hexgrad/Kokoro-82M", device=device
     )  # <= make sure lang_code matches voice
     # pipeline = KPipeline(
