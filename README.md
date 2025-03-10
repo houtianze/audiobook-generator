@@ -39,7 +39,7 @@ graph TD;
 ### CPU or GPU?
 The selection to run the model on CPU or GPU is automatic, meaning:
 - On Windows/WSL/Linux, If you have Nvidia graphic card with the driver properly installed, the model will be loaded to GPU (cuda) and executed, otherwise, the CPU is used (which is slower compared to GPU)
-- On Mac, you need to set the environment variable `PYTORCH_ENABLE_MPS_FALLBACK=1` for it to run on GPU (because at the time of writing, the MPS support in PyTorchis is not complete and it won't work without the CPU fallback), otherwise it will run on CPU.
+- On Mac, you need to set the environment variable `PYTORCH_ENABLE_MPS_FALLBACK=1` for it to run on GPU (because at the time of writing, the MPS support in PyTorch is not complete and it won't work without the CPU fallback), otherwise it will run on CPU.
 
 ### Why you need that extra pip install step for Windows?
 (Thanks to @notimp for spotting [this issue](#4).)
