@@ -23,7 +23,7 @@ graph TD;
     - If using `pip` and virtual environment, run this after the above `pip install` command (*with the virtual environment activated first*)
       - `pip install torch --index-url https://download.pytorch.org/whl/cu124 --force`
     - If using `pipx`, run this command instead:
-      - `pipx inject audiobook-generator torch --index-url https://download.pytorch.org/whl/cu124 --force`
+      - `pipx runpip audiobook-generator install torch --index-url https://download.pytorch.org/whl/cu124 --force`
     - Technical details on why this is needed is described at [the "Why you need that extra pip install step for Windows?" section](#why-you-need-that-extra-pip-install-step-for-windows).
 - Convert your epub file to audiobooks via the command
   - `abg <epub path> <audio output directory>`
