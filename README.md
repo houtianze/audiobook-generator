@@ -18,11 +18,11 @@ graph TD;
 ### For End Users
 - You DON'T need to clone this repository, but simply install it via `pip` (Virtual environment highly recommended, if you use `pipx` instead, virtual environments are automatically created for you.)
   - `pip install audiobook-generator`
-  - **NOTE* For Windows users, there is one extra step needed to make cuda(Nvidia) GPU is used when available:
+  - **NOTE** For Windows users, there is one extra step needed to make cuda(Nvidia) GPU is used when available:
     - If using `pip` and virtual environment, run this after the above `pip install` command (*with the virtual environment activated first*)
       - `pip3 install torch --index-url https://download.pytorch.org/whl/cu124`
     - If using `pipx`, run this command instead:
-      - `pipx inject audiobook-generator torch --index-url https://download.pytorch.org/whl/cu124`
+      - `pipx inject audiobook-generator torch --index-url https://download.pytorch.org/whl/cu124 --force`
     - Technical details on why this is needed is described at [the "Why you need that extra pip install step for Windows?" section](#why-you-need-that-extra-pip-install-step-for-windows).
 - Convert your epub file to audiobooks via the command
   - `abg <epub path> <audio output directory>`
@@ -42,9 +42,9 @@ The selection to run the model on CPU or GPU is automatic, meaning:
 - On Mac, you need to set the environment variable `PYTORCH_ENABLE_MPS_FALLBACK=1` for it to run on GPU (because at the time of writing, the MPS support in PyTorchis is not complete and it won't work without the CPU fallback), otherwise it will run on CPU.
 
 ### Why you need that extra pip install step for Windows?
-(Thanks to @notimp for raising this issue.)
+(Thanks to @notimp for spotting [this issue](#4).)
 
-If you go to [pytorch](https://pytorch.org/get-started/locally/), you will see that to install pytorch on Windows, you need to specify the `--index-url` parameter (e.g. `pip3 install torch --index-url https://download.pytorch.org/whl/cu124`). When using `uv` for development, this is handedled by [this section](https://github.com/houtianze/audiobook-generator/blob/9df750d943806ff89d55e78e21114878bb300822/pyproject.toml#L29-L37) of the `pyproject.toml` file:
+If you go to [pytorch](https://pytorch.org/get-started/locally/), you will see that to install pytorch (only) on Windows, you need to specify the `--index-url` parameter (e.g. `pip3 install torch --index-url https://download.pytorch.org/whl/cu124`). When using `uv` for development, this is handled by [this section](https://github.com/houtianze/audiobook-generator/blob/9df750d943806ff89d55e78e21114878bb300822/pyproject.toml#L29-L37) of the `pyproject.toml` file:
 
 ```toml
 [tool.uv.sources]
@@ -58,9 +58,9 @@ url = "https://download.pytorch.org/whl/cu124"
 explicit = true
 ```
 
-So running under `uv` in development, the torch dependency are installed correctly. But when it's packaged and published to (PyPI)[https://pypi.org], it seems that this special specification of the torch index part is not respected by `pip` and when you run `pip` (or `pipx`) install, it just runs `pip install torch` on Windows without that `--index-url` parameter, which installs a version that doesn't support CUDA/GPU. Currently I don't see how I can resolve this in packaging as I guess python package specification _may_ not support different dependency installation parameters on different platforms, or maybe I haven't digged deep enough. So for now, this extra step is required to install the correct version of torch on Windows.
+So running under `uv` in development, the torch dependency are installed correctly. However when it's packaged and published to [PyPI](https://pypi.org), it seems that this special specification of the torch index part is not respected by `pip` and when you run `pip` (or `pipx`) install, it just runs `pip install torch` on Windows without that `--index-url` parameter, which installs a version that doesn't support cuda/GPU. Currently I don't see how I can resolve this in packaging as I guess python package specification _may_ not support different dependency installation parameters on different platforms, or maybe I haven't digged deep enough. So for now, this extra step is required to install the correct version of torch on Windows.
 
-*Tip*
+## Misc
 
-You can use the following epub for testing:
-https://github.com/daisy/epub-accessibility-tests/releases/download/fundamental-2.0/Fundamental-Accessibility-Tests-Basic-Functionality-v2.0.0.epub
+- You can use [this epub](https://github.com/daisy/epub-accessibility-tests/releases/download/fundamental-2.0/Fundamental-Accessibility-Tests-Basic-Functionality-v2.0.0.epub) for testing:
+

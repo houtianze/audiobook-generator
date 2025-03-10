@@ -2,7 +2,11 @@ import argparse
 import os
 import re
 
+import torch
 from rich import print
+
+from audiobook_generator.util import (is_mps_fallback_enabled,
+                                      is_mps_supported, is_nvidia_available)
 
 from .chapterizer import Chapterizer
 from .defaults import *
@@ -86,8 +90,38 @@ def parse_args():
     return parser.parse_args()
 
 
+def check_system():
+    if True or os.name == "nt" and is_nvidia_available() and not torch.cuda.is_available():
+        print(
+            "[red]"
+            "You have an NVIDIA GPU but PyTorch installed does not support CUDA. "
+            "To be able to use CUDA, please run the following command once, "
+            "then this warning should disappear.\n"
+            "- (If you installed this program using pip) "
+            "pip3 install torch --index-url https://download.pytorch.org/whl/cu124 --force\n"
+            "- (If using `pipx`) "
+            "pipx runpip audiobook-generator install torch --index-url https://download.pytorch.org/whl/cu124 --force\n"
+            "For more information, please refer to: "
+            "https://github.com/houtianze/audiobook-generator/?tab=readme-ov-file#for-end-users\n"
+            "[/red]"
+        )
+
+    if is_mps_supported() and not is_mps_fallback_enabled():
+        # To use MPS device, we need to set the environment variable PYTORCH_ENABLE_MPS_FALLBACK to 1,
+        # Otherwise, you will see the following error:
+        # NotImplementedError: The operator 'aten::angle' is not currently implemented for the MPS device.
+        print(
+            "[purple]"
+            "Environment variable 'PYTORCH_ENABLE_MPS_FALLBACK' is not defined as 1, "
+            "please set it to 1 to use MPS, otherwise CPU will be used instead, "
+            "which is slower (but still works nevertheless)."
+            "[purple]"
+        )
+
+
 def main():
     args = parse_args()
+    check_system()
     split_and_gen_audio(
         epub_path=args.epub_path,
         output_dir=args.output_dir,

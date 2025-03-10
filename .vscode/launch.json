@@ -12,7 +12,8 @@
             "args": [
                 "c:/Users/ibic/Downloads/Fundamental-Accessibility-Tests-Basic-Functionality-v2.0.0.epub",
                 "C:/Users/ibic/Downloads"
-            ]
+            ],
+            "justMyCode": true
         }
     ]
 }
