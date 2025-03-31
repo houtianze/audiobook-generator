@@ -26,6 +26,11 @@ Repository = "https://github.com/houtianze/audiobook-generator"
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
 
+[tool.uv]
+override-dependencies = [
+    "spacy==3.7.5; sys_platform == 'linux' and platform_machine == 'aarch64'",
+]
+
 [tool.uv.sources]
 torch = [{ index = "pytorch-cu124", marker = "sys_platform == 'win32'" }]
 
