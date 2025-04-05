@@ -82,7 +82,7 @@ def zip_and_upload(output_dir):
 
 def main():
     # Process all EPUB files in the current directory
-    input_dir = os.getcwd()
+    input_dir = os.path.dirname(os.getcwd())
     output_dir = os.path.join("..", "audio_output")
     process_epub_files(input_dir, output_dir, convert_epub_to_audio)
     if os.path.exists(output_dir):
