@@ -28,7 +28,6 @@ def split_and_gen_audio(
 ):
     chapterizer = Chapterizer(epub_path, output_dir, bare_output, split_subsections)
     generated_text_files = chapterizer.chapterize()
-    return
 
     for text_file in generated_text_files:
         text = ""

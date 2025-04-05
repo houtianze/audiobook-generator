@@ -1,0 +1,82 @@
+import os
+from audiobook_generator.main import split_and_gen_audio
+from audiobook_generator.defaults import *
+import zipfile
+import dropbox
+
+
+def str_to_bool(value):
+    true_values = {"true", "1", "yes", "y", "on", "t"}
+    false_values = {"false", "0", "no", "n", "off", "f"}
+
+    if isinstance(value, str):
+        value_lower = value.strip().lower()
+        if value_lower in true_values:
+            return True
+        elif value_lower in false_values:
+            return False
+    raise ValueError(f"Cannot convert '{value}' to a boolean.")
+
+
+def convert_epub_to_audio(epub_file, output_dir):
+    os.makedirs(output_dir, exist_ok=True)
+    split_and_gen_audio(
+        epub_file,
+        output_dir,
+        voice=os.getenv("VOICE", DEFAULT_VOICE),
+        speed=os.getenv("SPEED", DEFAULT_SPEED),
+        format=os.getenv("FORMAT", DEFAULT_FORMAT),
+        resume=str_to_bool(os.getenv("RESUME", str(DEFAULT_RESUME))),
+        split_subsections=str_to_bool(
+            os.getenv("SPLIT_SUBSECTIONS", str(DEFAULT_SPLIT_SUBSECTIONS))
+        ),
+    )
+
+
+def process_epub_files(act):
+    # Get the current directory
+    current_directory = os.getcwd()
+
+    # Find all .epub files in the current directory
+    epub_files = [
+        file for file in os.listdir(current_directory) if file.endswith(".epub")
+    ]
+
+    for epub_file in epub_files:
+        act(epub_file)
+
+
+def zip_and_upload(output_dir):
+    # Create a zip file
+    zip_file_path = os.path.join(output_dir, "audio_output.zip")
+    with zipfile.ZipFile(zip_file_path, "w", zipfile.ZIP_DEFLATED) as zipf:
+        for root, _, files in os.walk(output_dir):
+            for file in files:
+                file_path = os.path.join(root, file)
+                arcname = os.path.relpath(file_path, output_dir)
+                zipf.write(file_path, arcname)
+
+    # Upload to Dropbox
+    dropbox_token = os.getenv("DROPBOX_TOKEN")
+    if not dropbox_token:
+        raise ValueError("DROPBOX_TOKEN environment variable is not set.")
+
+    dbx = dropbox.Dropbox(dropbox_token)
+    with open(zip_file_path, "rb") as f:
+        dbx.files_upload(
+            f.read(),
+            f"/{os.path.basename(zip_file_path)}",
+            mode=dropbox.files.WriteMode("overwrite"),
+        )
+
+
+def main():
+    # Process all EPUB files in the current directory
+    output_dir = os.path.join("..", "audio_output")
+    process_epub_files(convert_epub_to_audio, output_dir)
+    # Call the function
+    zip_and_upload(output_dir)
+
+
+if __name__ == "__main__":
+    main()
