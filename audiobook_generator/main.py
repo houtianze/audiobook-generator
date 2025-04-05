@@ -24,9 +24,11 @@ def split_and_gen_audio(
     format=DEFAULT_FORMAT,
     resume=DEFAULT_RESUME,
     bare_output=DEFAULT_BARE_OUTPUT,
+    split_subsections=DEFAULT_SPLIT_SUBSECTIONS,
 ):
-    chapterizer = Chapterizer(epub_path, output_dir, bare_output)
+    chapterizer = Chapterizer(epub_path, output_dir, bare_output, split_subsections)
     generated_text_files = chapterizer.chapterize()
+    return
 
     for text_file in generated_text_files:
         text = ""
@@ -70,7 +72,8 @@ def parse_args():
         "-r",
         "--resume",
         type=bool,
-        default=True,
+        default=DEFAULT_RESUME,
+        action=argparse.BooleanOptionalAction,
         help=(
             "Whether to skip audio generation if the audio file already exists in the output directory "
             "(mainly when some previous run was interrupted). "
@@ -84,10 +87,22 @@ def parse_args():
         "--bare-output",
         type=bool,
         default=DEFAULT_BARE_OUTPUT,
+        action=argparse.BooleanOptionalAction,
         help=(
             "Whether to directly create files in the output directory specified. "
             "If false, a sub directory of the format 'Title - Author' will be created inside the output directory, "
-            f"where all the file are created. (default: {DEFAULT_RESUME})"
+            f"where all the file are created. (default: {DEFAULT_BARE_OUTPUT})"
+        ),
+    )
+    parser.add_argument(
+        "--split-subsections",
+        type=bool,
+        default=DEFAULT_SPLIT_SUBSECTIONS,
+        action=argparse.BooleanOptionalAction,
+        help=(
+            "Whether to split subsections of chapters into separate files. "
+            "If true, sub-sections will be split; otherwise, they will be kept together. "
+            f"(default: {DEFAULT_SPLIT_SUBSECTIONS})"
         ),
     )
     return parser.parse_args()
@@ -134,6 +149,7 @@ def main():
         format=args.format,
         resume=args.resume,
         bare_output=args.bare_output,
+        split_subsections=args.split_subsections,
     )
     print(
         (

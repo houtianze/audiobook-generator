@@ -30,12 +30,38 @@ graph TD;
 - If you want to see all the command line switches, just run `abg -h`
 
 ### For Development
+
+#### Running in development
 - This program uses [`uv`](https://github.com/astral-sh/uv) for dependency management and execution in development, install it first if you haven't done so.
 - To run the program from its source:
   - Clone this repository and `cd` inside.
   - (Do it ONCE only at the first time) Run `uv sync` to create the virtual environment in the `.env` directory and download all the dependencies.
   - Then run the following command
     - `uv run -m audiobook_generator.main ...`
+
+#### Automatic publishing a new version via GitHub Actions ()
+
+##### One time setup
+1. Create 2 environments `testpypi` and `pypi` at https://github.com/houtianze/audiobook-generator/settings/environments
+2. Configure the Publisher settings at [testpypi](https://test.pypi.org/manage/project/audiobook-generator/settings/publishing/) and [pypi](https://pypi.org/manage/project/audiobook-generator/settings/publishing/) accordingly:
+   - testpypi:
+   ```text
+    Repository: houtianze/audiobook-generator
+    Workflow: python-publish-testpypi.yml
+    Environment name: testpypi
+   ```
+   - pypi:
+   ```text
+    Repository: houtianze/audiobook-generator
+    Workflow: python-publish.yml
+    Environment name: pypi
+   ```
+
+##### Publishing
+1. Tag a new version `git tag v1.x.y`
+2. Push to GitHub `git push --tags`
+3. Create a release on GitHub using the tag either using its website or run `gh release create v1.x.y --generate-notes` (You need to install the GitHub CLI from https://cli.github.com/ and auth yourself first)
+4. Relax and let
 
 ### CPU or GPU?
 The selection to run the model on CPU or GPU is automatic, meaning:

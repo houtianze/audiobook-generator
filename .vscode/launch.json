@@ -10,6 +10,7 @@
             "request": "launch",
             "module": "audiobook_generator.main",
             "args": [
+                "--split-subsections",
                 "c:/Users/ibic/Downloads/Fundamental-Accessibility-Tests-Basic-Functionality-v2.0.0.epub",
                 "C:/Users/ibic/Downloads"
             ],

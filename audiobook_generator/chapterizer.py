@@ -8,10 +8,11 @@ from .util import make_fs_safe
 
 
 class Chapterizer(object):
-    def __init__(self, epub_path, output_dir, bare_output):
+    def __init__(self, epub_path, output_dir, bare_output, split_subsections):
         self.epub_path = epub_path
         self.output_dir = output_dir
         self.bear_output = bare_output
+        self.split_subsections = split_subsections
 
         self.book = epub.read_epub(epub_path)
         if not bare_output:
@@ -76,14 +77,25 @@ class Chapterizer(object):
 
         # Then extract chapters (keeping existing functionality)
         def _extract(chapter):
-            link = self.book.get_item_with_href(chapter.href.split("#")[0])
+            href_pair = chapter.href.split("#")
+            href = href_pair[0]
+            section_id = None
+            if len(href_pair) == 2:
+                section_id = href_pair[1]
+            if len(href_pair) > 2:
+                print(f"Error: Invalid href {chapter.href}")
+                exit(1)
+            link = self.book.get_item_with_href(href)
             if not link:
                 print(f"Error: Could not find item with href {chapter.href}")
                 exit(1)
             if link in all_links:
                 return None
 
-            all_links.append(link)
+            if self.split_subsections:
+                all_links.append(chapter.href)
+            else:
+                all_links.append(link)
             soup = BeautifulSoup(link.content, "html.parser")
             self.chapter_index += 1
             chapter_type = "Chapter" if isinstance(chapter, epub.Link) else "Section"
@@ -94,8 +106,11 @@ class Chapterizer(object):
             # Limit length to avoid issues on systems with filename length restrictions
             file_name = file_name[:240] + ".txt"
             file_name = os.path.join(self.output_dir, file_name)
-            with open(file_name, "w", encoding="utf-8") as f:
+            if self.split_subsections and section_id:
+                text = soup.find(id=section_id).get_text()
+            else:
                 text = soup.get_text()
+            with open(file_name, "w", encoding="utf-8") as f:
                 f.write(text)
             return file_name
 
