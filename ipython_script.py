@@ -1,8 +1,11 @@
 import os
-from audiobook_generator.main import split_and_gen_audio
-from audiobook_generator.defaults import *
 import zipfile
+
 import dropbox
+from rich import print
+
+from audiobook_generator.defaults import *
+from audiobook_generator.main import split_and_gen_audio
 
 
 def str_to_bool(value):
