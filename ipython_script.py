@@ -45,7 +45,7 @@ def process_epub_files(input_dir, output_dir, act):
 
     for epub_file in epub_files:
         print(f"Processing {epub_file}...")
-        act(epub_file)
+        act(epub_file, output_dir)
 
 
 def zip_it(output_dir, zip_file_path):
