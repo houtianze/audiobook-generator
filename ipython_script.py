@@ -44,6 +44,7 @@ def process_epub_files(input_dir, output_dir, act):
     ]
 
     for epub_file in epub_files:
+        epub_file = os.path.join(input_dir, epub_file)
         print(f"Processing {epub_file}...")
         act(epub_file, output_dir)
 
