@@ -10,6 +10,17 @@ graph TD;
 
 ## Usage
 
+### Using Google Colab (This is the most convenient way to run it without even the need of owning a GPU)
+
+### Prerequisites
+- Create a token in Dropbox following [this guide]( https://dropbox.tech/developers/generate-an-access-token-for-your-own-account) , be sure to copy the value of the token before you close the page as you won't see it again
+- Add this token as a Google Colab secret of name `DROPBOX_TOKEN`
+- Click this button <a target="_blank" href="https://colab.research.google.com/github/houtianze/audiobook-generator/blob/master/convert-epub-to-audiobook.ipynb">
+  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+</a> to open the Colab notebook.
+- Upload your epub file to the root directory of the Colab runtime.
+- Run the code cells in sequence, and after you click the run button of the last cell, you can leave the browser tab and let it do all the hard work. Once all the audio files are generated, the notebook will zip them all and upload to your Dropbox.
+
 ### Prerequisites
 - Python 3.10+ (This program was tested on 3.12)
 - (Optional) Install [espeak-ng](https://github.com/espeak-ng/espeak-ng) (On Debian/Ubuntu, run `apt install -y espeak-ng`)
