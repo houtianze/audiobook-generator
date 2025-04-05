@@ -37,7 +37,7 @@ def process_epub_files(input_dir, output_dir, act):
 
     # Find all .epub files in the current directory
     epub_files = [
-        file for file in os.listdir(current_directory) if file.endswith(".epub")
+        file for file in os.listdir(input_dir) if file.endswith(".epub")
     ]
 
     for epub_file in epub_files:
