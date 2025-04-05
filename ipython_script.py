@@ -82,7 +82,10 @@ def main():
     input_dir = os.getcwd()
     output_dir = os.path.join("..", "audio_output")
     process_epub_files(input_dir, output_dir, convert_epub_to_audio)
-    zip_and_upload(output_dir)
+    if os.path.exists(output_dir):
+        zip_and_upload(output_dir)
+    else:
+        print(f"[blue]Output directory '{output_dir}' does not exist. Skipping zip and upload.[/blue]")
 
 
 if __name__ == "__main__":
