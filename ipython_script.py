@@ -33,9 +33,7 @@ def convert_epub_to_audio(epub_file, output_dir):
     )
 
 
-def process_epub_files(act):
-    # Get the current directory
-    current_directory = os.getcwd()
+def process_epub_files(input_dir, output_dir, act):
 
     # Find all .epub files in the current directory
     epub_files = [
@@ -43,12 +41,11 @@ def process_epub_files(act):
     ]
 
     for epub_file in epub_files:
+        print(f"Processing {epub_file}...")
         act(epub_file)
 
 
-def zip_and_upload(output_dir):
-    # Create a zip file
-    zip_file_path = os.path.join(output_dir, "audio_output.zip")
+def zip_it(output_dir, zip_file_path):
     with zipfile.ZipFile(zip_file_path, "w", zipfile.ZIP_DEFLATED) as zipf:
         for root, _, files in os.walk(output_dir):
             for file in files:
@@ -56,10 +53,14 @@ def zip_and_upload(output_dir):
                 arcname = os.path.relpath(file_path, output_dir)
                 zipf.write(file_path, arcname)
 
-    # Upload to Dropbox
+
+def upload_to_dropbox(zip_file_path):
     dropbox_token = os.getenv("DROPBOX_TOKEN")
     if not dropbox_token:
-        raise ValueError("DROPBOX_TOKEN environment variable is not set.")
+        print(
+            "[blue]DROPBOX_TOKEN environment variable is not set, skip uploading.[/blue]"
+        )
+        return
 
     dbx = dropbox.Dropbox(dropbox_token)
     with open(zip_file_path, "rb") as f:
@@ -70,11 +71,17 @@ def zip_and_upload(output_dir):
         )
 
 
+def zip_and_upload(output_dir):
+    zip_file_path = os.path.join(output_dir, "audio_output.zip")
+    zip_it(output_dir, zip_file_path)
+    upload_to_dropbox(zip_file_path)
+
+
 def main():
     # Process all EPUB files in the current directory
+    input_dir = os.getcwd()
     output_dir = os.path.join("..", "audio_output")
-    process_epub_files(convert_epub_to_audio, output_dir)
-    # Call the function
+    process_epub_files(input_dir, output_dir, convert_epub_to_audio)
     zip_and_upload(output_dir)
 
 
