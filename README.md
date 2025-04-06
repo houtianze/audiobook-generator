@@ -12,21 +12,23 @@ graph TD;
 
 ### Using Google Colab (This is the most convenient way to run it without even the need of owning a GPU)
 
-### Prerequisites
+#### Prerequisites
 - Create a token in Dropbox following [this guide]( https://dropbox.tech/developers/generate-an-access-token-for-your-own-account) , be sure to copy the value of the token before you close the page as you won't see it again
 - Add this token as a Google Colab secret of name `DROPBOX_TOKEN`
+
+##### Running
 - Click this button <a target="_blank" href="https://colab.research.google.com/github/houtianze/audiobook-generator/blob/master/convert-epub-to-audiobook.ipynb">
-  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
-</a> to open the Colab notebook.
+  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> to open the Colab notebook.
 - Upload your epub file to the root directory of the Colab runtime.
 - Run the code cells in sequence, and after you click the run button of the last cell, you can leave the browser tab and let it do all the hard work. Once all the audio files are generated, the notebook will zip them all and upload to your Dropbox.
 
-### Prerequisites
+### Running locally
+#### Prerequisites
 - Python 3.10+ (This program was tested on 3.12)
 - (Optional) Install [espeak-ng](https://github.com/espeak-ng/espeak-ng) (On Debian/Ubuntu, run `apt install -y espeak-ng`)
 - (Development only) [uv](https://github.com/astral-sh/uv)
 
-### For End Users
+#### For End Users
 - You don't need to clone this repository and you can install either way:
   - Using `pip`: `python -m pip install audiobook-generator` (virtual environment highly recommended)
   - Using `pipx`: `pipx install audiobook-generator`
@@ -40,9 +42,9 @@ graph TD;
   - `abg <epub path> <audio output directory>`
 - If you want to see all the command line switches, just run `abg -h`
 
-### For Development
+#### For Development
 
-#### Running in development
+##### Running in development
 - This program uses [`uv`](https://github.com/astral-sh/uv) for dependency management and execution in development, install it first if you haven't done so.
 - To run the program from its source:
   - Clone this repository and `cd` inside.
@@ -50,9 +52,9 @@ graph TD;
   - Then run the following command
     - `uv run -m audiobook_generator.main ...`
 
-#### Automatic publishing a new version via GitHub Actions ()
+##### Automatic publishing a new version via GitHub Actions ()
 
-##### One time setup
+###### One time setup
 1. Create 2 environments `testpypi` and `pypi` at https://github.com/houtianze/audiobook-generator/settings/environments
 2. Configure the Publisher settings at [testpypi](https://test.pypi.org/manage/project/audiobook-generator/settings/publishing/) and [pypi](https://pypi.org/manage/project/audiobook-generator/settings/publishing/) accordingly:
    - testpypi:
@@ -68,7 +70,7 @@ graph TD;
     Environment name: pypi
    ```
 
-##### Publishing
+###### Publishing
 1. Tag a new version `git tag v1.x.y`
 2. Push to GitHub `git push --tags`
 3. Create a release on GitHub using the tag either using its website or run `gh release create v1.x.y --generate-notes` (You need to install the GitHub CLI from https://cli.github.com/ and auth yourself first)
