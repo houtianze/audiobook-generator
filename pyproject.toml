@@ -26,7 +26,7 @@ Repository = "https://github.com/houtianze/audiobook-generator"
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
 
-# No longer needed, as spacye 3.8.5 fixes the missing binary for linux-aarch64
+# No longer needed, as spacy 3.8.5 fixes the missing binary for linux-aarch64
 # [tool.uv]
 # override-dependencies = [
 #     "spacy==3.7.5; sys_platform == 'linux' and platform_machine == 'aarch64'",
