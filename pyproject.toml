@@ -6,7 +6,6 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "beautifulsoup4>=4.13.3",
-    "dropbox>=12.0.2",
     "ebooklib>=0.18",
     "kokoro>=0.8.2",
     "misaki[en,zh]>=0.9.4",

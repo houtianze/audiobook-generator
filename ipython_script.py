@@ -39,9 +39,7 @@ def convert_epub_to_audio(epub_file, output_dir):
 def process_epub_files(input_dir, output_dir, act):
 
     # Find all .epub files in the current directory
-    epub_files = [
-        file for file in os.listdir(input_dir) if file.endswith(".epub")
-    ]
+    epub_files = [file for file in os.listdir(input_dir) if file.endswith(".epub")]
 
     for epub_file in epub_files:
         epub_file = os.path.join(input_dir, epub_file)
@@ -58,38 +56,18 @@ def zip_it(output_dir, zip_file_path):
                 zipf.write(file_path, arcname)
 
 
-def upload_to_dropbox(zip_file_path):
-    dropbox_token = os.getenv("DROPBOX_TOKEN")
-    if not dropbox_token:
-        print(
-            "[blue]DROPBOX_TOKEN environment variable is not set, skip uploading.[/blue]"
-        )
-        return
-
-    dbx = dropbox.Dropbox(dropbox_token)
-    with open(zip_file_path, "rb") as f:
-        dbx.files_upload(
-            f.read(),
-            f"/{os.path.basename(zip_file_path)}",
-            mode=dropbox.files.WriteMode("overwrite"),
-        )
-
-
-def zip_and_upload(output_dir):
-    zip_file_path = os.path.join(os.path.dirname(output_dir), "audio_output.zip")
-    zip_it(output_dir, zip_file_path)
-    upload_to_dropbox(zip_file_path)
-
-
 def main():
     # Process all EPUB files in the current directory
     input_dir = os.path.dirname(os.getcwd())
     output_dir = os.path.join("..", "audio_output")
     process_epub_files(input_dir, output_dir, convert_epub_to_audio)
     if os.path.exists(output_dir):
-        zip_and_upload(output_dir)
+        zip_file_path = os.path.join(os.path.dirname(output_dir), "audio_output.zip")
+        zip_it(output_dir, zip_file_path)
     else:
-        print(f"[blue]Output directory '{output_dir}' does not exist. Skipping zip and upload.[/blue]")
+        print(
+            f"[blue]Output directory '{output_dir}' does not exist. Skipping zip and upload.[/blue]"
+        )
 
 
 if __name__ == "__main__":
