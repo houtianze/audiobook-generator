@@ -13,7 +13,7 @@ from audiobook_generator.util import (
 
 from .chapterizer import Chapterizer
 from .defaults import *
-from .tts import gen_audio
+from .tts import get_pipeline, gen_audio
 
 
 def split_and_gen_audio(
@@ -29,6 +29,7 @@ def split_and_gen_audio(
     chapterizer = Chapterizer(epub_path, output_dir, bare_output, split_subsections)
     generated_text_files = chapterizer.chapterize()
 
+    pipeline = get_pipeline(voice[0])
     for text_file in generated_text_files:
         text = ""
         with open(text_file, "r", encoding="utf-8") as f:
@@ -37,7 +38,7 @@ def split_and_gen_audio(
         if resume and os.path.exists(audio_file):
             print(f"Skipping {audio_file} as it already exists")
             continue
-        gen_audio(text, audio_file, voice, speed)
+        gen_audio(pipeline, text, audio_file, voice, speed)
 
 
 def parse_args():

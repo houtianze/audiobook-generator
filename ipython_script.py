@@ -76,7 +76,7 @@ def upload_to_dropbox(zip_file_path):
 
 
 def zip_and_upload(output_dir):
-    zip_file_path = os.path.join(output_dir, "audio_output.zip")
+    zip_file_path = os.path.join(os.path.dirname(output_dir), "audio_output.zip")
     zip_it(output_dir, zip_file_path)
     upload_to_dropbox(zip_file_path)
 

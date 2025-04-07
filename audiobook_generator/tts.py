@@ -3,25 +3,18 @@ import importlib
 
 import numpy as np
 import soundfile as sf
-from rich import print
 import torch
+from rich import print
 
 from audiobook_generator.util import is_mps_fallback_enabled, is_mps_supported
 
 from .defaults import *
 
 
-def gen_audio(
-    text,
-    audio_file,
-    voice=DEFAULT_VOICE,
-    speed=DEFAULT_SPEED,
-    format=DEFAULT_FORMAT,
-):
+def get_pipeline(lang_code):
     # 'a' => American English, ' => British English
     # 'j' => Japanese: pip install misaki[ja]
     # 'z => Mandarin Chinese: pip install misaki[zh]
-    lang_code = voice[0]
     device = (
         torch.accelerator.current_accelerator().type
         if torch.accelerator.is_available()
@@ -38,6 +31,17 @@ def gen_audio(
     # pipeline = KPipeline(
     #     lang_code=lang_code, repo_id="hexgrad/Kokoro-82M-v1.1-zh"
     # )  # <= make sure lang_code matches voice
+    return pipeline
+
+
+def gen_audio(
+    pipeline,
+    text,
+    audio_file,
+    voice=DEFAULT_VOICE,
+    speed=DEFAULT_SPEED,
+    format=DEFAULT_FORMAT,
+):
     generator = pipeline(text, voice, speed)
     audios = []
     for _, _, audio in generator:
@@ -75,6 +79,7 @@ def main():
     gen_audio(
         args.text,
         args.audio_file,
+        get_pipeline(args.voice[0]),
         voice=args.voice,
         speed=args.speed,
         format=args.format,
