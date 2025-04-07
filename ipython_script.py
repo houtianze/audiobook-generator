@@ -57,12 +57,12 @@ def zip_it(output_dir, zip_file_path):
 
 
 def main():
-    # Process all EPUB files in the current directory
     input_dir = os.path.dirname(os.getcwd())
-    output_dir = os.path.join("..", "audio_output")
+    output_dir_name = os.environ.get("OUTPUT_DIR", "Audiobook")
+    output_dir = os.path.join("..", output_dir_name)
     process_epub_files(input_dir, output_dir, convert_epub_to_audio)
     if os.path.exists(output_dir):
-        zip_file_path = os.path.join(os.path.dirname(output_dir), "audio_output.zip")
+        zip_file_path = os.path.join(os.path.dirname(output_dir), f"{output_dir_name}.zip")
         zip_it(output_dir, zip_file_path)
     else:
         print(
