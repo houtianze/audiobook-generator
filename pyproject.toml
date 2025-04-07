@@ -9,7 +9,7 @@ dependencies = [
     "dropbox>=12.0.2",
     "ebooklib>=0.18",
     "kokoro>=0.8.2",
-    "misaki[en,zh]>=0.8.2",
+    "misaki[en,zh]>=0.9.4",
     "pip>=25.0.1",
     "rich>=13.9.4",
     "soundfile>=0.13.1",
@@ -27,10 +27,11 @@ Repository = "https://github.com/houtianze/audiobook-generator"
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
 
-[tool.uv]
-override-dependencies = [
-    "spacy==3.7.5; sys_platform == 'linux' and platform_machine == 'aarch64'",
-]
+# No longer needed, as spacye 3.8.5 fixes the missing binary for linux-aarch64
+# [tool.uv]
+# override-dependencies = [
+#     "spacy==3.7.5; sys_platform == 'linux' and platform_machine == 'aarch64'",
+# ]
 
 [tool.uv.sources]
 torch = [{ index = "pytorch-cu124", marker = "sys_platform == 'win32'" }]
