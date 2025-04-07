@@ -24,9 +24,8 @@ def split_and_gen_audio(
     format=DEFAULT_FORMAT,
     resume=DEFAULT_RESUME,
     bare_output=DEFAULT_BARE_OUTPUT,
-    split_subsections=DEFAULT_SPLIT_SUBSECTIONS,
 ):
-    chapterizer = Chapterizer(epub_path, output_dir, bare_output, split_subsections)
+    chapterizer = Chapterizer(epub_path, output_dir, bare_output)
     generated_text_files = chapterizer.chapterize()
 
     pipeline = get_pipeline(voice[0])
@@ -94,17 +93,6 @@ def parse_args():
             f"where all the file are created. (default: {DEFAULT_BARE_OUTPUT})"
         ),
     )
-    # parser.add_argument(
-    #     "--split-subsections",
-    #     type=bool,
-    #     default=DEFAULT_SPLIT_SUBSECTIONS,
-    #     action=argparse.BooleanOptionalAction,
-    #     help=(
-    #         "Whether to split subsections of chapters into separate files. "
-    #         "If true, sub-sections will be split; otherwise, they will be kept together. "
-    #         f"(default: {DEFAULT_SPLIT_SUBSECTIONS})"
-    #     ),
-    # )
     return parser.parse_args()
 
 
@@ -149,7 +137,6 @@ def main():
         format=args.format,
         resume=args.resume,
         bare_output=args.bare_output,
-        # split_subsections=args.split_subsections,
     )
     print(
         (

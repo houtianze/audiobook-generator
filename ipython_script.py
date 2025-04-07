@@ -29,9 +29,6 @@ def convert_epub_to_audio(epub_file, output_dir):
         speed=os.getenv("SPEED", DEFAULT_SPEED),
         format=os.getenv("FORMAT", DEFAULT_FORMAT),
         resume=str_to_bool(os.getenv("RESUME", str(DEFAULT_RESUME))),
-        split_subsections=str_to_bool(
-            os.getenv("SPLIT_SUBSECTIONS", str(DEFAULT_SPLIT_SUBSECTIONS))
-        ),
     )
 
 

@@ -8,11 +8,10 @@ from .util import make_fs_safe
 
 
 class Chapterizer(object):
-    def __init__(self, epub_path, output_dir, bare_output, split_subsections):
+    def __init__(self, epub_path, output_dir, bare_output):
         self.epub_path = epub_path
         self.output_dir = output_dir
         self.bear_output = bare_output
-        self.split_subsections = split_subsections
 
         self.book = epub.read_epub(epub_path)
         if not bare_output:
@@ -77,26 +76,17 @@ class Chapterizer(object):
 
         # Then extract chapters (keeping existing functionality)
         def _extract(chapter):
-            href_pair = chapter.href.split("#")
-            href = href_pair[0]
-            section_id = None
-            if len(href_pair) == 2:
-                section_id = href_pair[1]
-            if len(href_pair) > 2:
-                print(f"Error: Invalid href {chapter.href}")
-                exit(1)
-            link = self.book.get_item_with_href(href)
-            if not link:
+            href = chapter.href.split("#")[0]
+            if href in all_hrefs:
+                return None
+            all_hrefs.append(href)
+
+            href_item = self.book.get_item_with_href(href)
+            if not href_item:
                 print(f"Error: Could not find item with href {chapter.href}")
                 exit(1)
-            if link in all_links:
-                return None
 
-            if self.split_subsections:
-                all_links.append(chapter.href)
-            else:
-                all_links.append(link)
-            soup = BeautifulSoup(link.content, "html.parser")
+            soup = BeautifulSoup(href_item.content, "html.parser")
             self.chapter_index += 1
             chapter_type = "Chapter" if isinstance(chapter, epub.Link) else "Section"
             chapter_name = (
@@ -106,10 +96,7 @@ class Chapterizer(object):
             # Limit length to avoid issues on systems with filename length restrictions
             file_name = file_name[:240] + ".txt"
             file_name = os.path.join(self.output_dir, file_name)
-            if self.split_subsections and section_id:
-                text = soup.find(id=section_id).get_text()
-            else:
-                text = soup.get_text()
+            text = soup.get_text()
             with open(file_name, "w", encoding="utf-8") as f:
                 f.write(text)
             return file_name
@@ -126,7 +113,7 @@ class Chapterizer(object):
                     extracted_files.append(file)
             return extracted_files
 
-        all_links = []
+        all_hrefs = []
         self.chapter_index = 0
         self.extract_cover()
         extracted_files = extract_chapters(self.book.toc)
