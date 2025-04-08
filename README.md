@@ -10,13 +10,6 @@ graph TD;
 
 ## Usage
 
-### Using Google Colab (This is the most convenient way to run it without even the need of owning a GPU)
-
-- Click this button <a target="_blank" href="https://colab.research.google.com/github/houtianze/audiobook-generator/blob/master/convert-epub-to-audiobook.ipynb">
-  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> to open the Colab notebook.
-- Upload your epub file to the root directory of the Colab runtime.
-- Run the code cells in sequence, and after you click the run button of the last cell, you can leave the browser tab and let it do all the hard work. Once all the audio files are generated, the notebook will zip them all and upload to your Dropbox.
-
 ### Running locally
 
 #### Prerequisites
@@ -40,13 +33,19 @@ graph TD;
 
 #### For Development
 
-##### Running in development
 - This program uses [`uv`](https://github.com/astral-sh/uv) for dependency management and execution in development, install it first if you haven't done so.
 - To run the program from its source:
   - Clone this repository and `cd` inside.
   - (Do it ONCE only at the first time) Run `uv sync` to create the virtual environment in the `.env` directory and download all the dependencies.
   - Then run the following command
     - `uv run -m audiobook_generator.main ...`
+
+### Using Google Colab (if your epub is short and can be converted under 30 minutes)
+
+- Click this button <a target="_blank" href="https://colab.research.google.com/github/houtianze/audiobook-generator/blob/master/convert-epub-to-audiobook.ipynb">
+  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> to open the Colab notebook.
+- Upload your epub file to the root directory of the Colab runtime.
+- Run the code cells in sequence, and after you click the run button of the last cell, you will be prompted to give the notebook access to your Google Drive, which the fully converted audiobook will be uploaded to.
 
 ## CI/CD Pipeline
 ### Automatic publishing a new version via GitHub Actions ()

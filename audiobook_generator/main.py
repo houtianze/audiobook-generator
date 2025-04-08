@@ -25,16 +25,25 @@ def split_and_gen_audio(
     resume=DEFAULT_RESUME,
     bare_output=DEFAULT_BARE_OUTPUT,
 ):
+    def get_audio_file(text_file):
+        return re.sub(r"\.txt$", f".{format}", text_file)
+
     chapterizer = Chapterizer(epub_path, output_dir, bare_output)
     generated_text_files = chapterizer.chapterize()
 
     pipeline = get_pipeline(voice[0])
-    for text_file in generated_text_files:
+    for i, text_file in enumerate(generated_text_files):
         text = ""
         with open(text_file, "r", encoding="utf-8") as f:
             text = f.read()
-        audio_file = re.sub(r"\.txt$", f".{format}", text_file)
-        if resume and os.path.exists(audio_file):
+        audio_file = get_audio_file(text_file)
+        # Make sure the audio file is not the last one before skipping
+        if (
+            resume
+            and os.path.exists(audio_file)
+            and i < len(generated_text_files) - 1
+            and os.path.exists(get_audio_file(generated_text_files[i + 1]))
+        ):
             print(f"Skipping {audio_file} as it already exists")
             continue
         gen_audio(pipeline, text, audio_file, voice, speed)
