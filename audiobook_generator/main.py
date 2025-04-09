@@ -47,6 +47,7 @@ def split_and_gen_audio(
             print(f"Skipping {audio_file} as it already exists")
             continue
         gen_audio(pipeline, text, audio_file, voice, speed)
+        print(f"Generated: {audio_file}")
 
 
 def parse_args():
