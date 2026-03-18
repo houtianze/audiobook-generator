@@ -70,7 +70,7 @@ graph TD;
 1. Tag a new version `git tag v1.x.y`
 2. Push to GitHub `git push --tags`
 3. Create a release on GitHub using the tag either using its website or run `gh release create v1.x.y --generate-notes` (You need to install the GitHub CLI from https://cli.github.com/ and auth yourself first)
-4. Relax and let
+4. Relax and let GitHub Actions finish its hard work
 
 ## CPU or GPU?
 The selection to run the model on CPU or GPU is automatic, meaning:
@@ -78,7 +78,7 @@ The selection to run the model on CPU or GPU is automatic, meaning:
 - On Mac, you need to set the environment variable `PYTORCH_ENABLE_MPS_FALLBACK=1` for it to run on GPU (because at the time of writing, the MPS support in PyTorch is not complete and it won't work without the CPU fallback), otherwise it will run on CPU.
 
 ## Why you need that extra pip install step for Windows?
-(Thanks to @notimp for spotting [this issue](#4).)
+(Thanks to @notimp for spotting [this issue #4](https://github.com/houtianze/audiobook-generator/issues/4) )
 
 If you go to [pytorch](https://pytorch.org/get-started/locally/), you will see that to install pytorch (only) on Windows, you need to specify the `--index-url` parameter (e.g. `pip3 install torch --index-url https://download.pytorch.org/whl/cu124`). When using `uv` for development, this is handled by [this section](https://github.com/houtianze/audiobook-generator/blob/9df750d943806ff89d55e78e21114878bb300822/pyproject.toml#L29-L37) of the `pyproject.toml` file:
 
